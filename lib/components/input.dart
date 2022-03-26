@@ -50,24 +50,24 @@ class Input extends StatelessWidget {
 
     // Validate field type
     if (type == 'email') {
-      return value.isValidEmail() ? null : "Email non valida";
+      return value!.isValidEmail() ? null : "Email non valida";
     }
 
     // Validate field length
     if (minLength != null && maxLength != null) {
       final isValid =
-          value.isGreatherThan(minLength) && value.isLowerThan(maxLength);
+          value!.isGreatherThan(minLength) && value.isLowerThan(maxLength);
       return isValid
           ? null
           : 'Il campo deve essere tra $minLength e $maxLength caratteri';
     }
     if (maxLength != null) {
-      return value.isLowerThan(maxLength)
+      return value!.isLowerThan(maxLength)
           ? null
-          : 'Il campo deve essere di almeno $maxLength caratteri';
+          : 'Il campo deve essere di massimo $maxLength caratteri';
     }
     if (minLength != null) {
-      return value.isGreatherThan(minLength)
+      return value!.isGreatherThan(minLength)
           ? null
           : 'Il campo deve essere di almeno $minLength caratteri';
     }

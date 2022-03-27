@@ -27,10 +27,17 @@ class Input extends StatelessWidget {
         mainAxisSize: MainAxisSize.min,
         children: <Widget>[
           TextFormField(
+            cursorColor: colors['primary'],
             controller: controller,
             obscureText: type == 'password',
             autovalidateMode: AutovalidateMode.onUserInteraction,
             decoration: InputDecoration(
+              focusedBorder: UnderlineInputBorder(
+                borderSide: BorderSide(
+                  color: colors['primary'] ?? Colors.blue,
+                  width: 1.5,
+                ),
+              ),
               errorStyle: TextStyle(
                 color: colors['red'],
               ),

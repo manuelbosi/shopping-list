@@ -17,7 +17,13 @@ class _DropdownState extends State<Dropdown> {
   String? _selectedOption;
   @override
   Widget build(BuildContext context) {
-    return DropdownButton<String?>(
+    return DropdownButtonFormField<String?>(
+      validator: (String? value) {
+        if (value == null) {
+          return "Campo obbligatorio";
+        }
+        return null;
+      },
       hint: Text(widget.placeholder),
       isDense: false,
       value: _selectedOption,
@@ -34,11 +40,6 @@ class _DropdownState extends State<Dropdown> {
       },
       icon: const Icon(Icons.arrow_drop_down),
       isExpanded: true,
-      borderRadius: BorderRadius.circular(10),
-      underline: Container(
-        height: 2,
-        color: Colors.grey.shade300,
-      ),
     );
   }
 }

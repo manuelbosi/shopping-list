@@ -9,16 +9,18 @@ class Input extends StatelessWidget {
   final bool isRequired;
   final int? minLength;
   final int? maxLength;
+  final String? placeholder;
 
-  const Input({
-    Key? key,
-    required this.type,
-    required this.controller,
-    this.label,
-    this.isRequired = false,
-    this.minLength,
-    this.maxLength,
-  }) : super(key: key);
+  const Input(
+      {Key? key,
+      required this.type,
+      required this.controller,
+      this.label,
+      this.isRequired = false,
+      this.minLength,
+      this.maxLength,
+      this.placeholder})
+      : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -32,6 +34,7 @@ class Input extends StatelessWidget {
             obscureText: type == 'password',
             autovalidateMode: AutovalidateMode.onUserInteraction,
             decoration: InputDecoration(
+              hintText: placeholder,
               focusedBorder: UnderlineInputBorder(
                 borderSide: BorderSide(
                   color: colors['primary'] ?? Colors.blue,

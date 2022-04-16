@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:shopping_list/config/app_config.dart';
+import 'package:shopping_list/config/storage_keys.dart';
 import 'package:shopping_list/utils/custom_snackbar.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 
@@ -38,7 +39,7 @@ class UserService {
     final prefs = await SharedPreferences.getInstance();
     final r = await client.auth.signOut();
     print(r.error);
-    await prefs.remove('USER');
+    await prefs.remove(StorageKeys.USER_SESSION);
     Navigator.of(context).pushReplacementNamed('/login');
   }
 
@@ -48,17 +49,22 @@ class UserService {
   }
 
   // Recover session
-  Future<void> recoverSession(session) async {
+  Future<void> recoverSession(BuildContext context, session) async {
     final prefs = await SharedPreferences.getInstance();
     final response = await client.auth.recoverSession(session);
-    prefs.setString('USER', response.data!.persistSessionString);
-    print(response);
+    if (response.data != null) {
+      prefs.setString(
+          StorageKeys.USER_SESSION, response.data!.persistSessionString);
+      Navigator.pushReplacementNamed(context, '/home');
+    } else {
+      Navigator.pushReplacementNamed(context, '/login');
+    }
   }
 
   /// Check if the user is already logged, returns null or the user session
   Future<dynamic> isLogged() async {
     final sharedPreferences = await SharedPreferences.getInstance();
-    final session = sharedPreferences.getString('USER');
+    final session = sharedPreferences.getString(StorageKeys.USER_SESSION);
     return session;
   }
 }

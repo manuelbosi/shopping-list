@@ -13,7 +13,7 @@ class _SplashScreenState extends State<SplashScreen> {
   @override
   void initState() {
     super.initState();
-    _checkIfLogged();
+    _checkIfLogged(context);
   }
 
   @override
@@ -50,14 +50,13 @@ class _SplashScreenState extends State<SplashScreen> {
     );
   }
 
-  void _checkIfLogged() async {
+  void _checkIfLogged(BuildContext context) async {
     final session = await UserService().isLogged();
     await Future.delayed(const Duration(seconds: 3));
     if (session == null) {
-      Navigator.pushReplacementNamed(context, '/login', result: LoginPage());
+      Navigator.pushReplacementNamed(context, '/login');
     } else {
-      UserService().recoverSession(session);
-      Navigator.pushReplacementNamed(context, '/home');
+      UserService().recoverSession(context, session);
     }
   }
 }

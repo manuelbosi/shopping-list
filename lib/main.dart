@@ -4,8 +4,10 @@ import 'package:shopping_list/views/auth/login.dart';
 import 'package:shopping_list/views/auth/register.dart';
 import 'package:shopping_list/views/homepage.dart';
 import 'package:shopping_list/views/splash.dart';
+import 'package:supabase_flutter/supabase_flutter.dart';
 
 Future<void> main() async {
+  await Supabase.initialize(debug: true);
   await dotenv.load(fileName: ".env");
   runApp(const App());
 }

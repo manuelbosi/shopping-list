@@ -10,6 +10,7 @@ class Input extends StatelessWidget {
   final int? minLength;
   final int? maxLength;
   final String? placeholder;
+  final IconData? icon;
 
   const Input(
       {Key? key,
@@ -19,7 +20,8 @@ class Input extends StatelessWidget {
       this.isRequired = false,
       this.minLength,
       this.maxLength,
-      this.placeholder})
+      this.placeholder,
+      this.icon})
       : super(key: key);
 
   @override
@@ -34,7 +36,11 @@ class Input extends StatelessWidget {
             obscureText: type == 'password',
             autovalidateMode: AutovalidateMode.onUserInteraction,
             decoration: InputDecoration(
+              isDense: true,
+              // isCollapsed: true,
               hintText: placeholder,
+              prefixIcon: icon != null ? Icon(icon) : null,
+              prefixIconConstraints: const BoxConstraints(minWidth: 25),
               focusedBorder: UnderlineInputBorder(
                 borderSide: BorderSide(
                   color: colors['primary'] ?? Colors.blue,

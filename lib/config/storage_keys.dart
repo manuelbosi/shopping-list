@@ -1,3 +1,4 @@
 class StorageKeys {
-  static final String USER_SESSION = 'USER';
+  // ignore: constant_identifier_names
+  static const String USER_SESSION = 'USER';
 }

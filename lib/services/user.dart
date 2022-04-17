@@ -58,6 +58,7 @@ class UserService {
       Navigator.pushReplacementNamed(context, '/home');
     } else {
       Navigator.pushReplacementNamed(context, '/login');
+      CustomSnackBar.showError(context: context, message: "Sessione scaduta");
     }
   }
 

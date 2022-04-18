@@ -56,6 +56,7 @@ class _DropdownState extends State<Dropdown> {
           ),
         ),
       ),
+      autovalidateMode: AutovalidateMode.onUserInteraction,
     );
   }
 }

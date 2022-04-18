@@ -40,7 +40,6 @@ class AddShoppingListPopup extends StatelessWidget {
         children: [
           Form(
             key: _formKey,
-            autovalidateMode: AutovalidateMode.always,
             child: Column(
               children: <Widget>[
                 Dropdown(

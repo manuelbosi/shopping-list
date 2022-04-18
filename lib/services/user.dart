@@ -37,8 +37,7 @@ class UserService {
   // User logout
   Future<void> logout(context, {String? email, String? password}) async {
     final prefs = await SharedPreferences.getInstance();
-    final r = await client.auth.signOut();
-    print(r.error);
+    await client.auth.signOut();
     await prefs.remove(StorageKeys.USER_SESSION);
     Navigator.of(context).pushReplacementNamed('/login');
   }

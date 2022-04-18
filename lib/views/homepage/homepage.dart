@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:shopping_list/config/colors.dart';
 import 'package:shopping_list/providers/lists_provder.dart';
 import 'package:shopping_list/services/user.dart';
 import 'package:shopping_list/views/homepage/lists_component.dart';
@@ -32,6 +33,7 @@ class _HomepageState extends State<Homepage> {
     return Scaffold(
       appBar: AppBar(
         title: const Text("Elenco liste"),
+        backgroundColor: ColorPalette.primary,
       ),
       body: const Lists(),
       drawer: Drawer(

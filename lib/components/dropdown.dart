@@ -45,13 +45,13 @@ class _DropdownState extends State<Dropdown> {
       },
       icon: const Icon(Icons.arrow_drop_down),
       isExpanded: true,
-      decoration: InputDecoration(
+      decoration: const InputDecoration(
         errorStyle: TextStyle(
-          color: colors['text'],
+          color: ColorPalette.danger,
         ),
         focusedBorder: UnderlineInputBorder(
           borderSide: BorderSide(
-            color: colors['primary'] ?? Colors.blue,
+            color: ColorPalette.primary,
             width: 1.5,
           ),
         ),

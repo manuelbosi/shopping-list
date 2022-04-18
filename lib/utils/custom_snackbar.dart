@@ -11,7 +11,7 @@ class CustomSnackBar {
         elevation: 2,
         content: Text(message),
         duration: const Duration(seconds: 10),
-        backgroundColor: colors['danger'],
+        backgroundColor: ColorPalette.danger,
         behavior: SnackBarBehavior.floating,
       ),
     );

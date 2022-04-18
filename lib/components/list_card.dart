@@ -21,7 +21,7 @@ class ListCard extends StatelessWidget {
       width: double.infinity,
       height: maxSize + 20,
       child: Card(
-        color: colors["purple"],
+        color: ColorPalette.purple,
         elevation: 5,
         child: Padding(
           padding: const EdgeInsets.all(8.0),
@@ -74,17 +74,17 @@ class CardContent extends StatelessWidget {
       children: [
         Text(
           title,
-          style: TextStyle(
+          style: const TextStyle(
             fontSize: 16,
             fontWeight: FontWeight.bold,
-            color: colors["blue"],
+            color: ColorPalette.blue,
           ),
         ),
         Text(
           date,
-          style: TextStyle(
+          style: const TextStyle(
             fontSize: 12,
-            color: colors["blue-opacity"],
+            color: ColorPalette.blueOpacity,
           ),
         ),
       ],

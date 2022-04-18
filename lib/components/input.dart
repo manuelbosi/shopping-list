@@ -31,7 +31,7 @@ class Input extends StatelessWidget {
         mainAxisSize: MainAxisSize.min,
         children: <Widget>[
           TextFormField(
-            cursorColor: colors['primary'],
+            cursorColor: ColorPalette.primary,
             controller: controller,
             obscureText: type == 'password',
             autovalidateMode: AutovalidateMode.onUserInteraction,
@@ -41,14 +41,14 @@ class Input extends StatelessWidget {
               hintText: placeholder,
               prefixIcon: icon != null ? Icon(icon) : null,
               prefixIconConstraints: const BoxConstraints(minWidth: 25),
-              focusedBorder: UnderlineInputBorder(
+              focusedBorder: const UnderlineInputBorder(
                 borderSide: BorderSide(
-                  color: colors['primary'] ?? Colors.blue,
+                  color: ColorPalette.primary,
                   width: 1.5,
                 ),
               ),
-              errorStyle: TextStyle(
-                color: colors['red'],
+              errorStyle: const TextStyle(
+                color: ColorPalette.danger,
               ),
             ),
             validator: validateField,

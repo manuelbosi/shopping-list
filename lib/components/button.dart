@@ -24,10 +24,10 @@ class Button extends StatelessWidget {
   Widget build(BuildContext context) {
     return TextButton(
       style: ButtonStyle(
-        foregroundColor: MaterialStateProperty.all<Color?>(colors['white']),
+        foregroundColor: MaterialStateProperty.all<Color?>(ColorPalette.white),
         splashFactory: NoSplash.splashFactory,
         backgroundColor: MaterialStateProperty.all<Color?>(
-          type == "success" ? colors["success"] : colors["danger"],
+          type == "success" ? ColorPalette.success : ColorPalette.danger,
         ),
         minimumSize: MaterialStateProperty.all<Size>(
           Size(isFullWidth(width), 0),

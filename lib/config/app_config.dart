@@ -7,5 +7,5 @@ class AppConfig {
     dotenv.get('SUPABASE_URL'),
     dotenv.get('SUPABASE_KEY'),
   );
-  static final String tablePrefix = 'sl_';
+  static const String tablePrefix = 'sl_';
 }

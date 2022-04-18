@@ -1,26 +1,38 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import 'package:shopping_list/components/button.dart';
 import 'package:shopping_list/components/dropdown.dart';
 import 'package:shopping_list/components/input.dart';
 import 'package:shopping_list/models/dropdown_option.dart';
-import 'package:shopping_list/shared/static.dart';
+import 'package:shopping_list/providers/markets_provider.dart';
 
-class AddShoppingListPopup extends StatelessWidget {
+class AddShoppingListPopup extends StatefulWidget {
   final _formKey = GlobalKey<FormState>();
   final Function onSubmit;
   final TextEditingController _nameController = TextEditingController();
-  int? selectedMarket;
 
+  AddShoppingListPopup({
+    Key? key,
+    required this.onSubmit,
+  }) : super(key: key);
+
+  @override
+  State<AddShoppingListPopup> createState() => _AddShoppingListPopupState();
+}
+
+class _AddShoppingListPopupState extends State<AddShoppingListPopup> {
+  int? _selectedMarket;
   // Form object
   final Map<String, dynamic> form = {
     'name': null,
     'market': null,
   };
 
-  AddShoppingListPopup({
-    Key? key,
-    required this.onSubmit,
-  }) : super(key: key);
+  @override
+  void initState() {
+    super.initState();
+    _getMarkets();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -39,21 +51,23 @@ class AddShoppingListPopup extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Form(
-            key: _formKey,
+            key: widget._formKey,
             child: Column(
               children: <Widget>[
                 Dropdown(
-                  options: markets,
+                  // options: _marketsDropdown,
+                  options: Provider.of<MarketsProvider>(context, listen: true)
+                      .markets,
                   placeholder: "Seleziona un'opzione",
                   onChanged: (DropdownOption? market) {
-                    selectedMarket = market?.key;
-                    print(selectedMarket);
+                    _selectedMarket = market?.key;
+                    print(_selectedMarket);
                   },
                 ),
                 const SizedBox(height: 8),
                 Input(
                   type: 'text',
-                  controller: _nameController,
+                  controller: widget._nameController,
                   isRequired: true,
                   placeholder: "Nome lista",
                 ),
@@ -82,10 +96,10 @@ class AddShoppingListPopup extends StatelessWidget {
                 type: 'success',
                 child: const Text("Salva"),
                 onPressed: () {
-                  if (_formKey.currentState!.validate()) {
-                    form['name'] = _nameController.text;
-                    form['market'] = selectedMarket;
-                    onSubmit(form);
+                  if (widget._formKey.currentState!.validate()) {
+                    form['name'] = widget._nameController.text;
+                    form['market'] = _selectedMarket;
+                    widget.onSubmit(form);
                   }
                 },
               ),
@@ -94,5 +108,9 @@ class AddShoppingListPopup extends StatelessWidget {
         )
       ],
     );
+  }
+
+  void _getMarkets() async {
+    await Provider.of<MarketsProvider>(context, listen: false).getMarkets();
   }
 }

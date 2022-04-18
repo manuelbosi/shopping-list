@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:provider/provider.dart';
 import 'package:shopping_list/providers/lists_provder.dart';
+import 'package:shopping_list/providers/markets_provider.dart';
 import 'package:shopping_list/views/auth/login.dart';
 import 'package:shopping_list/views/auth/register.dart';
 import 'package:shopping_list/views/homepage/homepage.dart';
@@ -14,7 +15,10 @@ Future<void> main() async {
       providers: [
         ChangeNotifierProvider(
           create: (_) => ListsProvider(),
-        )
+        ),
+        ChangeNotifierProvider(
+          create: (_) => MarketsProvider(),
+        ),
       ],
       child: const App(),
     ),

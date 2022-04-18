@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:shopping_list/components/add_list_popup.dart';
 import 'package:shopping_list/config/colors.dart';
 import 'package:shopping_list/providers/lists_provder.dart';
 import 'package:shopping_list/services/user.dart';
@@ -54,6 +55,21 @@ class _HomepageState extends State<Homepage> {
           ),
         ),
       ),
+      floatingActionButton: FloatingActionButton(
+        child: LayoutBuilder(
+            builder: ((context, constraints) =>
+                Icon(Icons.add, size: constraints.maxHeight / 2))),
+        onPressed: () {
+          _showAddListPopup();
+        },
+        backgroundColor: ColorPalette.primary,
+        splashColor: Colors.transparent,
+        elevation: 0,
+        focusElevation: 0,
+        highlightElevation: 0,
+        hoverElevation: 0,
+        disabledElevation: 0,
+      ),
     );
   }
 
@@ -63,5 +79,18 @@ class _HomepageState extends State<Homepage> {
 
   void _setupSubscriptions() {
     Provider.of<ListsProvider>(context, listen: false).setupSubscription();
+  }
+
+  void _showAddListPopup() {
+    showDialog(
+      context: context,
+      builder: (context) {
+        return AddShoppingListPopup(
+          onSubmit: (form) {
+            print(form);
+          },
+        );
+      },
+    );
   }
 }

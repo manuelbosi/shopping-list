@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:shopping_list/config/app_config.dart';
 import 'package:shopping_list/models/list.dart';
+import 'package:shopping_list/utils/custom_snackbar.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 
 final String tableName = '${AppConfig.tablePrefix}lists';
@@ -70,10 +71,12 @@ class ListsProvider extends ChangeNotifier {
     }).subscribe();
   }
 
-  Future<void> createList(Map<String, dynamic> list) async {
+  Future<void> createList(
+      Map<String, dynamic> list, BuildContext context) async {
     final response = await _client.from(tableName).insert(list).execute();
     if (response.error == null) {
-      final t = response;
+      CustomSnackBar.showSuccess(context: context, message: "Lista salvata");
+      Navigator.pop(context);
     }
   }
 }

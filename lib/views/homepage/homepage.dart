@@ -88,8 +88,7 @@ class _HomepageState extends State<Homepage> {
         return AddShoppingListPopup(
           onSubmit: (Map<String, dynamic> newList) async {
             await Provider.of<ListsProvider>(context, listen: false)
-                .createList(newList);
-            Navigator.pop(context);
+                .createList(newList, context);
           },
         );
       },

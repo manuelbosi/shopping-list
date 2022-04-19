@@ -4,16 +4,17 @@ import 'package:shopping_list/components/button.dart';
 import 'package:shopping_list/components/dropdown.dart';
 import 'package:shopping_list/components/input.dart';
 import 'package:shopping_list/models/dropdown_option.dart';
+import 'package:shopping_list/models/list.dart';
 import 'package:shopping_list/providers/markets_provider.dart';
 
 class AddShoppingListPopup extends StatefulWidget {
   final _formKey = GlobalKey<FormState>();
-  final Function onSubmit;
+  final Function(Map<String, dynamic> list) onSubmit;
   final TextEditingController _nameController = TextEditingController();
 
   AddShoppingListPopup({
     Key? key,
-    required this.onSubmit,
+    required this.onSubmit(Map<String, dynamic> list),
   }) : super(key: key);
 
   @override
@@ -23,10 +24,6 @@ class AddShoppingListPopup extends StatefulWidget {
 class _AddShoppingListPopupState extends State<AddShoppingListPopup> {
   int? _selectedMarket;
   // Form object
-  final Map<String, dynamic> form = {
-    'name': null,
-    'market': null,
-  };
 
   @override
   void initState() {
@@ -61,7 +58,6 @@ class _AddShoppingListPopupState extends State<AddShoppingListPopup> {
                   placeholder: "Seleziona un'opzione",
                   onChanged: (DropdownOption? market) {
                     _selectedMarket = market?.key;
-                    print(_selectedMarket);
                   },
                 ),
                 const SizedBox(height: 8),
@@ -97,9 +93,13 @@ class _AddShoppingListPopupState extends State<AddShoppingListPopup> {
                 child: const Text("Salva"),
                 onPressed: () {
                   if (widget._formKey.currentState!.validate()) {
-                    form['name'] = widget._nameController.text;
-                    form['market'] = _selectedMarket;
-                    widget.onSubmit(form);
+                    final Map<String, dynamic> newList = ListModel(
+                      name: widget._nameController.text,
+                      marketId: _selectedMarket!,
+                      isCompleted: false,
+                      createdAt: DateTime.now().toString(),
+                    ).toJson();
+                    widget.onSubmit(newList);
                   }
                 },
               ),

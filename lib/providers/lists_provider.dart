@@ -69,4 +69,11 @@ class ListsProvider extends ChangeNotifier {
       notifyListeners();
     }).subscribe();
   }
+
+  Future<void> createList(Map<String, dynamic> list) async {
+    final response = await _client.from(tableName).insert(list).execute();
+    if (response.error == null) {
+      final t = response;
+    }
+  }
 }

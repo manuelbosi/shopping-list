@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:shopping_list/components/add_list_popup.dart';
 import 'package:shopping_list/config/colors.dart';
-import 'package:shopping_list/providers/lists_provder.dart';
+import 'package:shopping_list/providers/lists_provider.dart';
 import 'package:shopping_list/services/user.dart';
 import 'package:shopping_list/views/homepage/lists_component.dart';
 import 'package:supabase_flutter/supabase_flutter.dart' hide Provider;
@@ -86,8 +86,10 @@ class _HomepageState extends State<Homepage> {
       context: context,
       builder: (context) {
         return AddShoppingListPopup(
-          onSubmit: (form) {
-            print(form);
+          onSubmit: (Map<String, dynamic> newList) async {
+            await Provider.of<ListsProvider>(context, listen: false)
+                .createList(newList);
+            Navigator.pop(context);
           },
         );
       },

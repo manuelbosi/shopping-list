@@ -10,23 +10,11 @@ class Lists extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final listsProvider = Provider.of<ListsProvider>(context);
-    if (listsProvider.lists.isNotEmpty) {
-      return listsProvider.isLoading
-          ? const Center(
-              child: CircularProgressIndicator(),
-            )
-          : ListView.builder(
-              itemCount: listsProvider.lists.length,
-              itemBuilder: (BuildContext context, int i) {
-                final ListModel list = listsProvider.lists[i];
-                return ListCard(
-                  date: list.createdAt,
-                  image: "",
-                  title: list.name,
-                );
-              },
-            );
-    } else {
+    if (listsProvider.isLoading) {
+      return const Center(
+        child: CircularProgressIndicator(),
+      );
+    } else if (listsProvider.lists.isEmpty) {
       return const Center(
         child: Padding(
           padding: EdgeInsets.symmetric(horizontal: 20),
@@ -38,6 +26,18 @@ class Lists extends StatelessWidget {
             ),
           ),
         ),
+      );
+    } else {
+      return ListView.builder(
+        itemCount: listsProvider.lists.length,
+        itemBuilder: (BuildContext context, int i) {
+          final ListModel list = listsProvider.lists[i];
+          return ListCard(
+            date: list.createdAt,
+            image: "",
+            title: list.name,
+          );
+        },
       );
     }
   }

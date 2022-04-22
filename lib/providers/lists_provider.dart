@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:shopping_list/config/app_config.dart';
 import 'package:shopping_list/models/list.dart';
+import 'package:shopping_list/requests/lists_request.dart';
 import 'package:shopping_list/utils/custom_snackbar.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 
@@ -19,9 +20,10 @@ class ListsProvider extends ChangeNotifier {
 
   Future<void> getLists() async {
     _setLoadingState(true);
+    final String query = allListsRequest();
     final response = await _client
         .from(tableName)
-        .select('*')
+        .select(query)
         .order('created_at', ascending: false)
         .execute();
     if (response.error == null) {

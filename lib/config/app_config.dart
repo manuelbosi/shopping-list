@@ -8,4 +8,6 @@ class AppConfig {
     dotenv.get('SUPABASE_KEY'),
   );
   static const String tablePrefix = 'sl_';
+  static final String storageUrl =
+      "${dotenv.get('SUPABASE_URL')}/storage/v1/object/sign/shopping-list-bucket/";
 }

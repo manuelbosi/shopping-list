@@ -78,7 +78,7 @@ class _HomepageState extends State<Homepage> {
   }
 
   void _setupSubscriptions() {
-    Provider.of<ListsProvider>(context, listen: false).setupSubscription();
+    Provider.of<ListsProvider>(context, listen: false).setupSubscriptions();
   }
 
   void _showAddListPopup() {

@@ -1,18 +1,16 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:shopping_list/config/colors.dart';
+import 'package:shopping_list/models/list.dart';
 
 const double maxSize = 50;
 
 class ListCard extends StatelessWidget {
-  final String image;
-  final String title;
-  final String date;
+  final ListModel list;
 
   const ListCard({
     Key? key,
-    required this.image,
-    required this.title,
-    required this.date,
+    required this.list,
   }) : super(key: key);
 
   @override
@@ -28,9 +26,9 @@ class ListCard extends StatelessWidget {
           child: Row(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              const CardImage(),
+              CardImage(image: list.market!.imageUrl),
               const SizedBox(width: 8),
-              CardContent(title: title, date: date),
+              CardContent(title: list.name, date: list.createdAt),
             ],
           ),
         ),
@@ -40,17 +38,29 @@ class ListCard extends StatelessWidget {
 }
 
 class CardImage extends StatelessWidget {
-  const CardImage({Key? key}) : super(key: key);
+  final String image;
+  const CardImage({
+    Key? key,
+    required this.image,
+  }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    return Container(
+    return CachedNetworkImage(
+      imageBuilder: (context, imageProvider) {
+        return Container(
+          decoration: BoxDecoration(
+            borderRadius: BorderRadius.circular(8),
+            image: DecorationImage(
+              image: imageProvider,
+              fit: BoxFit.cover,
+            ),
+          ),
+        );
+      },
+      imageUrl: image,
       width: maxSize,
-      height: maxSize,
-      decoration: BoxDecoration(
-        borderRadius: BorderRadius.circular(10),
-        color: Colors.black54,
-      ),
+      errorWidget: (context, url, error) => const Icon(Icons.error),
     );
   }
 }

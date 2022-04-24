@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:shopping_list/config/app_config.dart';
 import 'package:shopping_list/models/list.dart';
+import 'package:shopping_list/models/market.dart';
 import 'package:shopping_list/requests/lists_request.dart';
 import 'package:shopping_list/utils/custom_snackbar.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
@@ -12,10 +13,9 @@ class ListsProvider extends ChangeNotifier {
   bool _isLoading = false;
   List<ListModel> lists = [];
 
-  Map<String, RealtimeSubscription?> subscriptions = {
-    'insert': null,
-    'update': null,
-    'delete': null,
+  Map<SupabaseEventTypes, RealtimeSubscription?> subscriptions = {
+    SupabaseEventTypes.insert: null,
+    SupabaseEventTypes.delete: null,
   };
 
   Future<void> getLists() async {
@@ -38,34 +38,42 @@ class ListsProvider extends ChangeNotifier {
   void _setLoadingState(bool isLoading) => _isLoading = isLoading;
 
   // Setup realtime subscription
-  void setupSubscription() {
+  void setupSubscriptions() {
     _setupInsertSubscription();
-    _setupUpdateSubscription();
     _setupDeleteSubscription();
   }
 
   void _setupInsertSubscription() {
-    subscriptions['insert'] =
-        _client.from(tableName).on(SupabaseEventTypes.insert, (payload) {
-      final newList = ListModel.fromJson(payload.newRecord);
-      lists = [newList, ...lists];
-      notifyListeners();
-    }).subscribe();
-  }
+    subscriptions[SupabaseEventTypes.insert] =
+        _client.from(tableName).on(SupabaseEventTypes.insert, (payload) async {
+      final newList = ListModel.fromJson(payload.newRecord, false);
 
-  void _setupUpdateSubscription() {
-    subscriptions['update'] =
-        _client.from(tableName).on(SupabaseEventTypes.update, (payload) {
-      lists
-          .removeWhere((ListModel list) => list.id == payload.oldRecord!['id']);
-      final newList = ListModel.fromJson(payload.newRecord);
-      lists = [newList, ...lists];
+      // OK: but with unhandle exception bug
+      final int marketId = payload.newRecord!['market_id'];
+      final market = await _client
+          .from('sl_markets')
+          .select()
+          .eq('id', marketId)
+          .limit(1)
+          .single()
+          .execute();
+      newList.market = Market.fromJson(market.data);
+      final tmpLists = [newList, ...lists];
+      lists = tmpLists;
       notifyListeners();
+
+      // TEST: debugging supabase unhandle exception
+      // newList.market = const Market(
+      //     id: 1,
+      //     name: "Coop",
+      //     imageUrl:"IMAGE_URL");
+      // lists = [newList, ...lists];
+      // notifyListeners();
     }).subscribe();
   }
 
   void _setupDeleteSubscription() {
-    subscriptions['delete'] =
+    subscriptions[SupabaseEventTypes.delete] =
         _client.from(tableName).on(SupabaseEventTypes.delete, (payload) {
       lists
           .removeWhere((ListModel list) => list.id == payload.oldRecord!['id']);

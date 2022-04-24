@@ -1,11 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:shopping_list/config/colors.dart';
-import 'package:shopping_list/models/dropdown_option.dart';
 
-class Dropdown extends StatefulWidget {
-  final List<DropdownOption> options;
+class Dropdown<T> extends StatefulWidget {
+  final List<T> options;
   final String placeholder;
-  final Function onChanged;
+  final Function(T?) onChanged;
 
   const Dropdown({
     Key? key,
@@ -19,11 +18,12 @@ class Dropdown extends StatefulWidget {
 }
 
 class _DropdownState extends State<Dropdown> {
-  DropdownOption? _selectedOption;
+  dynamic _selectedOption;
+
   @override
   Widget build(BuildContext context) {
-    return DropdownButtonFormField<DropdownOption>(
-      validator: (DropdownOption? option) {
+    return DropdownButtonFormField<dynamic>(
+      validator: (dynamic option) {
         if (option == null) {
           return "Campo obbligatorio";
         }
@@ -32,15 +32,15 @@ class _DropdownState extends State<Dropdown> {
       hint: Text(widget.placeholder),
       isDense: true,
       value: _selectedOption,
-      items: widget.options.map((DropdownOption option) {
-        return DropdownMenuItem<DropdownOption>(
+      items: widget.options.map((dynamic option) {
+        return DropdownMenuItem<dynamic>(
           value: option,
           child: Text(
-            option.value,
+            option.name,
           ),
         );
       }).toList(),
-      onChanged: (DropdownOption? currentOption) {
+      onChanged: (dynamic currentOption) {
         setState(() => _selectedOption = currentOption);
         widget.onChanged(currentOption);
       },

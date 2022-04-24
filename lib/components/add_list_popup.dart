@@ -3,8 +3,8 @@ import 'package:provider/provider.dart';
 import 'package:shopping_list/components/button.dart';
 import 'package:shopping_list/components/dropdown.dart';
 import 'package:shopping_list/components/input.dart';
-import 'package:shopping_list/models/dropdown_option.dart';
 import 'package:shopping_list/models/list.dart';
+import 'package:shopping_list/models/market.dart';
 import 'package:shopping_list/providers/markets_provider.dart';
 
 class AddShoppingListPopup extends StatefulWidget {
@@ -22,7 +22,7 @@ class AddShoppingListPopup extends StatefulWidget {
 }
 
 class _AddShoppingListPopupState extends State<AddShoppingListPopup> {
-  int? _selectedMarket;
+  Market? _selectedMarket;
   // Form object
 
   @override
@@ -33,6 +33,8 @@ class _AddShoppingListPopupState extends State<AddShoppingListPopup> {
 
   @override
   Widget build(BuildContext context) {
+    final MarketsProvider marketsProvider =
+        Provider.of<MarketsProvider>(context, listen: true);
     return AlertDialog(
       elevation: 5,
       title: const Text("Crea lista"),
@@ -51,13 +53,14 @@ class _AddShoppingListPopupState extends State<AddShoppingListPopup> {
             key: widget._formKey,
             child: Column(
               children: <Widget>[
-                Dropdown(
+                Dropdown<Market>(
                   // options: _marketsDropdown,
-                  options: Provider.of<MarketsProvider>(context, listen: true)
-                      .markets,
-                  placeholder: "Seleziona un'opzione",
-                  onChanged: (DropdownOption? market) {
-                    _selectedMarket = market?.key;
+                  options: marketsProvider.markets,
+                  placeholder: marketsProvider.isLoading
+                      ? "Caricamento..."
+                      : 'Seleziona un\'opzione',
+                  onChanged: (dynamic market) {
+                    _selectedMarket = market;
                   },
                 ),
                 const SizedBox(height: 8),
@@ -95,7 +98,11 @@ class _AddShoppingListPopupState extends State<AddShoppingListPopup> {
                   if (widget._formKey.currentState!.validate()) {
                     final Map<String, dynamic> newList = ListModel(
                       name: widget._nameController.text,
-                      marketId: _selectedMarket!,
+                      market: Market(
+                        id: _selectedMarket!.id,
+                        name: _selectedMarket!.name,
+                        imageUrl: _selectedMarket!.imageUrl,
+                      ),
                       isCompleted: false,
                       createdAt: DateTime.now().toString(),
                     ).toJson();

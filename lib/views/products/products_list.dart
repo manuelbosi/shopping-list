@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:shopping_list/components/add_products_sheet.dart';
 import 'package:shopping_list/components/fab.dart';
+import 'package:shopping_list/components/loaders/products_shimmer.dart';
 import 'package:shopping_list/components/product_item.dart';
 import 'package:shopping_list/config/colors.dart';
 import 'package:shopping_list/models/products.dart';
@@ -47,9 +48,7 @@ class _ProductsListState extends State<ProductsList> {
         ],
       ),
       body: productsProvider.isLoading
-          ? const Center(
-              child: CircularProgressIndicator(),
-            )
+          ? const ProductsShimmer(count: 8)
           : productsProvider.products.isEmpty
               ? const Center(
                   child: Padding(

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:shopping_list/components/list_card.dart';
+import 'package:shopping_list/components/loaders/lists_shimmer.dart';
 import 'package:shopping_list/models/list.dart';
 import 'package:shopping_list/providers/lists_provider.dart';
 
@@ -11,7 +12,7 @@ class Lists extends StatelessWidget {
   Widget build(BuildContext context) {
     final listsProvider = Provider.of<ListsProvider>(context);
     return listsProvider.isLoading
-        ? const Center(child: CircularProgressIndicator())
+        ? const ListsShimmer(count: 8)
         : listsProvider.lists.isEmpty
             ? const Center(
                 child: Padding(

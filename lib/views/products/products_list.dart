@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:shopping_list/components/add_products_sheet.dart';
-import 'package:shopping_list/components/fab.dart';
 import 'package:shopping_list/components/loaders/products_shimmer.dart';
 import 'package:shopping_list/components/product_item.dart';
 import 'package:shopping_list/config/colors.dart';
@@ -17,6 +16,8 @@ class ProductsList extends StatefulWidget {
 }
 
 class _ProductsListState extends State<ProductsList> {
+  final _formKey = GlobalKey<FormState>();
+
   @override
   void initState() {
     super.initState();
@@ -97,8 +98,8 @@ class _ProductsListState extends State<ProductsList> {
     Provider.of<ProductsProvider>(context, listen: false).disposeSubscription();
   }
 
-  void _openBottomSheet() {
-    showModalBottomSheet(
+  void _openBottomSheet() async {
+    await showModalBottomSheet(
       shape: const RoundedRectangleBorder(
         borderRadius: BorderRadius.only(
           topLeft: Radius.circular(20),
@@ -107,7 +108,9 @@ class _ProductsListState extends State<ProductsList> {
       ),
       backgroundColor: ColorPalette.purple,
       context: context,
+      isScrollControlled: true,
       builder: (context) => AddProductSheet(
+        formKey: _formKey,
         listId: widget.params['id'],
         onSubmit: (Map<String, dynamic> product) async {
           await Provider.of<ProductsProvider>(context, listen: false)

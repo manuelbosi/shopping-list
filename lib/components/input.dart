@@ -11,18 +11,20 @@ class Input extends StatelessWidget {
   final int? maxLength;
   final String? placeholder;
   final IconData? icon;
+  final bool? autoFocus;
 
-  const Input(
-      {Key? key,
-      required this.type,
-      required this.controller,
-      this.label,
-      this.isRequired = false,
-      this.minLength,
-      this.maxLength,
-      this.placeholder,
-      this.icon})
-      : super(key: key);
+  const Input({
+    Key? key,
+    required this.type,
+    required this.controller,
+    this.label,
+    this.isRequired = false,
+    this.minLength,
+    this.maxLength,
+    this.placeholder,
+    this.icon,
+    this.autoFocus,
+  }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -31,6 +33,7 @@ class Input extends StatelessWidget {
         mainAxisSize: MainAxisSize.min,
         children: <Widget>[
           TextFormField(
+            autofocus: autoFocus ?? false,
             cursorColor: ColorPalette.primary,
             controller: controller,
             obscureText: type == 'password',

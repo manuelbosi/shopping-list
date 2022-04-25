@@ -50,20 +50,23 @@ class _ProductsListState extends State<ProductsList> {
           ? const Center(
               child: CircularProgressIndicator(),
             )
-          : ListView.separated(
-              separatorBuilder: (context, index) => Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 10),
-                child: Container(
-                  height: 1,
-                  color: ColorPalette.purple,
+          : Scrollbar(
+              isAlwaysShown: true,
+              child: ListView.separated(
+                separatorBuilder: (context, index) => Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 10),
+                  child: Container(
+                    height: 1,
+                    color: ColorPalette.purple,
+                  ),
                 ),
+                itemCount: productsProvider.products.length,
+                itemBuilder: (context, int i) {
+                  final Product product = productsProvider.products[i];
+                  final Key key = Key("product-${product.id}");
+                  return ProductItem(key: key, product: product);
+                },
               ),
-              itemCount: productsProvider.products.length,
-              itemBuilder: (context, int i) {
-                final Product product = productsProvider.products[i];
-                final Key key = Key("product-${product.id}");
-                return ProductItem(key: key, product: product);
-              },
             ),
     );
   }

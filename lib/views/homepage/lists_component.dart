@@ -25,12 +25,15 @@ class Lists extends StatelessWidget {
                   ),
                 ),
               )
-            : ListView.builder(
-                itemCount: listsProvider.lists.length,
-                itemBuilder: (BuildContext context, int i) {
-                  final ListModel list = listsProvider.lists[i];
-                  return ListCard(list: list);
-                },
+            : Scrollbar(
+                isAlwaysShown: true,
+                child: ListView.builder(
+                  itemCount: listsProvider.lists.length,
+                  itemBuilder: (BuildContext context, int i) {
+                    final ListModel list = listsProvider.lists[i];
+                    return ListCard(list: list);
+                  },
+                ),
               );
   }
 }

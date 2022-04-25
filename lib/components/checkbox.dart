@@ -5,9 +5,9 @@ class InputCheckbox extends StatefulWidget {
   final Function onChange;
   final bool isChecked;
   final double size;
-  final Color _checkedBackground = ColorPalette.blue;
+  final Color _checkedBackground = ColorPalette.primary;
   final Color _checkedIconColor = ColorPalette.white;
-  final Color _borderColor = ColorPalette.blue;
+  final Color _borderColor = ColorPalette.primary;
   final IconData _icon = Icons.check;
 
   InputCheckbox({

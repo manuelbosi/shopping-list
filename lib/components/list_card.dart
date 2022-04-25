@@ -15,21 +15,26 @@ class ListCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return SizedBox(
-      width: double.infinity,
-      height: maxSize + 20,
-      child: Card(
-        color: ColorPalette.purple,
-        elevation: 5,
-        child: Padding(
-          padding: const EdgeInsets.all(8.0),
-          child: Row(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              CardImage(image: list.market!.imageUrl),
-              const SizedBox(width: 8),
-              CardContent(title: list.name, date: list.createdAt),
-            ],
+    return GestureDetector(
+      onTap: () {
+        Navigator.pushNamed(context, '/products', arguments: {'id': list.id});
+      },
+      child: SizedBox(
+        width: double.infinity,
+        height: maxSize + 20,
+        child: Card(
+          color: ColorPalette.purple,
+          elevation: 5,
+          child: Padding(
+            padding: const EdgeInsets.all(8.0),
+            child: Row(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                CardImage(image: list.market!.imageUrl),
+                const SizedBox(width: 8),
+                CardContent(title: list.name, date: list.createdAt),
+              ],
+            ),
           ),
         ),
       ),

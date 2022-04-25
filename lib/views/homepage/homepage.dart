@@ -38,24 +38,6 @@ class _HomepageState extends State<Homepage> {
         backgroundColor: ColorPalette.primary,
       ),
       body: const Lists(),
-      drawer: Drawer(
-        child: SafeArea(
-          child: Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 8),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Text(
-                  "Ciao,\n${user!.email}",
-                  style: const TextStyle(
-                    fontSize: 28,
-                  ),
-                ),
-              ],
-            ),
-          ),
-        ),
-      ),
       floatingActionButton: FabButton(
         icon: Icons.add,
         onPressed: () {

@@ -1,14 +1,16 @@
 class Product {
-  final int id;
+  final int? id;
   final String name;
   final int listId;
   final bool isAdded;
+  final String createdAt;
 
   Product({
-    required this.id,
+    this.id,
     required this.name,
     required this.listId,
     required this.isAdded,
+    required this.createdAt,
   });
 
   factory Product.fromJson(Map<String, dynamic>? jsonData) {
@@ -20,6 +22,16 @@ class Product {
       name: jsonData['name'],
       listId: jsonData['list_id'],
       isAdded: jsonData['is_added'],
+      createdAt: jsonData['created_at'],
     );
+  }
+
+  Map<String, dynamic> toJson() {
+    return {
+      'name': name,
+      'list_id': listId,
+      'is_added': isAdded,
+      'created_at': createdAt,
+    };
   }
 }

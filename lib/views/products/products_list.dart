@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:shopping_list/components/add_products_sheet.dart';
+import 'package:shopping_list/components/fab.dart';
 import 'package:shopping_list/components/product_item.dart';
 import 'package:shopping_list/config/colors.dart';
 import 'package:shopping_list/models/products.dart';
@@ -33,8 +35,16 @@ class _ProductsListState extends State<ProductsList> {
         Provider.of<ProductsProvider>(context);
     return Scaffold(
       appBar: AppBar(
+        elevation: 2,
         title: const Text("Prodotti"),
         backgroundColor: ColorPalette.primary,
+        actions: [
+          IconButton(
+            onPressed: _openBottomSheet,
+            icon: Icon(Icons.add),
+            splashRadius: 15,
+          )
+        ],
       ),
       body: productsProvider.isLoading
           ? const Center(
@@ -70,5 +80,25 @@ class _ProductsListState extends State<ProductsList> {
 
   void _disposeSubscriptions() {
     Provider.of<ProductsProvider>(context, listen: false).disposeSubscription();
+  }
+
+  void _openBottomSheet() {
+    showModalBottomSheet(
+      shape: const RoundedRectangleBorder(
+        borderRadius: BorderRadius.only(
+          topLeft: Radius.circular(20),
+          topRight: Radius.circular(20),
+        ),
+      ),
+      backgroundColor: ColorPalette.purple,
+      context: context,
+      builder: (context) => AddProductSheet(
+        listId: widget.params['id'],
+        onSubmit: (Map<String, dynamic> product) async {
+          await Provider.of<ProductsProvider>(context, listen: false)
+              .addProduct(product, context);
+        },
+      ),
+    );
   }
 }

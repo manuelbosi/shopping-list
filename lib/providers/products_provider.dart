@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:shopping_list/config/app_config.dart';
 import 'package:shopping_list/models/products.dart';
+import 'package:shopping_list/utils/custom_snackbar.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 
 final String tableName = '${AppConfig.tablePrefix}products';
@@ -84,5 +85,15 @@ class ProductsProvider extends ChangeNotifier {
         .update({'is_added': isAdded})
         .eq('id', product.id)
         .execute();
+  }
+
+  Future<void> addProduct(
+      Map<String, dynamic> product, BuildContext context) async {
+    final response = await _client.from(tableName).insert(product).execute();
+    if (response.error == null) {
+      CustomSnackBar.showSuccess(
+          context: context, message: "Prodotto inserito");
+      Navigator.pop(context);
+    }
   }
 }

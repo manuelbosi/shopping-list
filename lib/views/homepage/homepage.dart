@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:shopping_list/components/add_list_popup.dart';
+import 'package:shopping_list/components/fab.dart';
 import 'package:shopping_list/config/colors.dart';
 import 'package:shopping_list/providers/lists_provider.dart';
 import 'package:shopping_list/services/user.dart';
@@ -55,20 +56,11 @@ class _HomepageState extends State<Homepage> {
           ),
         ),
       ),
-      floatingActionButton: FloatingActionButton(
-        child: LayoutBuilder(
-            builder: ((context, constraints) =>
-                Icon(Icons.add, size: constraints.maxHeight / 2))),
+      floatingActionButton: FabButton(
+        icon: Icons.add,
         onPressed: () {
           _showAddListPopup();
         },
-        backgroundColor: ColorPalette.primary,
-        splashColor: Colors.transparent,
-        elevation: 0,
-        focusElevation: 0,
-        highlightElevation: 0,
-        hoverElevation: 0,
-        disabledElevation: 0,
       ),
     );
   }

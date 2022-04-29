@@ -97,4 +97,15 @@ class ProductsProvider extends ChangeNotifier {
       Navigator.pop(context);
     }
   }
+
+  Future<void> deleteProduct(Product product) async {
+    final response =
+        await _client.from(tableName).delete().eq('id', product.id).execute();
+    if (response.error == null) {
+      products.removeWhere((Product p) => p.id == product.id);
+      notifyListeners();
+    } else {
+      print("error");
+    }
+  }
 }

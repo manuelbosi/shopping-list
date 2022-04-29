@@ -12,6 +12,7 @@ class ProductsProvider extends ChangeNotifier {
   List<Product> products = [];
   Map<SupabaseEventTypes, RealtimeSubscription?> subscriptions = {
     SupabaseEventTypes.insert: null,
+    SupabaseEventTypes.update: null,
     SupabaseEventTypes.delete: null,
   };
 
@@ -41,7 +42,7 @@ class ProductsProvider extends ChangeNotifier {
   /// Dispose subscription
   void disposeSubscription() {
     subscriptions[SupabaseEventTypes.insert]!.unsubscribe();
-    // subscriptions[SupabaseEventTypes.update]!.unsubscribe();
+    subscriptions[SupabaseEventTypes.update]!.unsubscribe();
     subscriptions[SupabaseEventTypes.delete]!.unsubscribe();
   }
 

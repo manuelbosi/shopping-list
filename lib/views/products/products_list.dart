@@ -64,8 +64,10 @@ class _ProductsListState extends State<ProductsList> {
                   ),
                 )
               : Scrollbar(
+                  key: GlobalKey(),
                   isAlwaysShown: true,
                   child: ListView.separated(
+                    // key: GlobalKey(),
                     separatorBuilder: (context, index) => Padding(
                       padding: const EdgeInsets.symmetric(horizontal: 10),
                       child: Container(
@@ -76,8 +78,9 @@ class _ProductsListState extends State<ProductsList> {
                     itemCount: productsProvider.products.length,
                     itemBuilder: (context, int i) {
                       final Product product = productsProvider.products[i];
-                      final Key key = Key("product-${product.id}");
-                      return ProductItem(key: key, product: product);
+                      // final Key key = UniqueKey();
+                      // return ProductItem(key: key, product: product);
+                      return ProductItem(product: product);
                     },
                   ),
                 ),

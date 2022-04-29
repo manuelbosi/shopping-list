@@ -40,6 +40,7 @@ class _ProductsListState extends State<ProductsList> {
         elevation: 2,
         title: const Text("Prodotti"),
         backgroundColor: ColorPalette.primary,
+        centerTitle: true,
         actions: [
           IconButton(
             onPressed: _openBottomSheet,

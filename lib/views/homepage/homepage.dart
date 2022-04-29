@@ -36,6 +36,7 @@ class _HomepageState extends State<Homepage> {
       appBar: AppBar(
         title: const Text("Elenco liste"),
         backgroundColor: ColorPalette.primary,
+        centerTitle: true,
       ),
       body: const Lists(),
       floatingActionButton: FabButton(

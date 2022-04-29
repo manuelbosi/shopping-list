@@ -33,7 +33,7 @@ class LoginPage extends StatelessWidget {
                     ),
                     const SizedBox(height: 16),
                     Input(
-                      type: 'text',
+                      type: 'password',
                       controller: _passwordController,
                       placeholder: "Password",
                       icon: Icons.lock,

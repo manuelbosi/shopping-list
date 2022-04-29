@@ -13,6 +13,7 @@ class Input extends StatelessWidget {
   final IconData? icon;
   final bool? autoFocus;
 
+  /// [type] parameter can be "text" or "password"
   const Input({
     Key? key,
     required this.type,

@@ -33,6 +33,7 @@ class _ProductItemState extends State<ProductItem> {
         groupTag: "0",
         // key: ValueKey('slidable-${widget.product.id}'),
         endActionPane: ActionPane(
+          extentRatio: 0.3,
           motion: const ScrollMotion(),
           children: [
             SlidableAction(

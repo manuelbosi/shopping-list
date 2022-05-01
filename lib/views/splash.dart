@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:shopping_list/config/colors.dart';
 import 'package:shopping_list/services/user.dart';
 
 class SplashScreen extends StatefulWidget {
@@ -19,27 +20,31 @@ class _SplashScreenState extends State<SplashScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       body: Container(
-        color: Colors.deepPurple,
+        color: ColorPalette.primary,
         child: Center(
           child: Padding(
             padding: const EdgeInsets.symmetric(horizontal: 16),
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
               crossAxisAlignment: CrossAxisAlignment.center,
-              children: const [
-                Text(
-                  "Shopping List",
+              children: [
+                Image.asset('assets/icon-no-bg.png', width: 200),
+                const SizedBox(height: 32),
+                const Text(
+                  "Shopping list",
                   textAlign: TextAlign.center,
                   style: TextStyle(fontSize: 40, color: Colors.white),
                 ),
-                Text(
+                const SizedBox(height: 24),
+                const Text(
                   "Crea e gestisci le tue liste della spesa",
                   textAlign: TextAlign.center,
-                  style: TextStyle(fontSize: 25),
+                  style: TextStyle(fontSize: 22, color: Colors.white),
                 ),
-                SizedBox(height: 20),
-                CircularProgressIndicator(
+                const SizedBox(height: 40),
+                const CircularProgressIndicator(
                   color: Colors.white,
+                  strokeWidth: 2,
                 )
               ],
             ),
